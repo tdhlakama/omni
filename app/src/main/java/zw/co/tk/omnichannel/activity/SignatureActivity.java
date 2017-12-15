@@ -32,6 +32,7 @@ import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
 import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.model.Customer;
+import zw.co.tk.omnichannel.util.OmniUtil;
 
 /**
  * Created by tdhla on 15-Dec-17.
@@ -45,6 +46,7 @@ public class SignatureActivity extends MenuBar {
     private SignaturePad mSignaturePad;
     private Button mClearButton;
     private Button mSaveButton;
+    Customer customer;
 
     @Inject
     CustomerDao customerDao;
@@ -53,12 +55,12 @@ public class SignatureActivity extends MenuBar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signature_activity);
-        verifyStoragePermissions(SignatureActivity.this);
+        OmniUtil.verifyStoragePermissions(SignatureActivity.this);
 
         OmniApplication.appComponent.inject(SignatureActivity.this);
 
         int customerId = getIntent().getIntExtra("customerId", 0);
-        Customer customer = customerDao.getCustomer(customerId);
+        customer = customerDao.getCustomer(customerId);
 
         TextView signature_pad_description = findViewById(R.id.signature_pad_description);
         signature_pad_description.setText("Agree " + customer);
@@ -98,6 +100,7 @@ public class SignatureActivity extends MenuBar {
             @Override
             public void onClick(View view) {
                 Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
+
                 if (addJpgSignatureToGallery(signatureBitmap)) {
                     Toast.makeText(SignatureActivity.this, "Signature saved into the Gallery", Toast.LENGTH_SHORT).show();
                 } else {
@@ -108,6 +111,7 @@ public class SignatureActivity extends MenuBar {
                 } else {
                     Toast.makeText(SignatureActivity.this, "Unable to store the SVG signature", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -189,28 +193,7 @@ public class SignatureActivity extends MenuBar {
         }
         return result;
     }
-    /**
-     * Checks if the app has permission to write to device storage
-     * <p>
-     * <p/>
-     * <p>
-     * If the app does not has permission then the user will be prompted to grant permissions
-     *
-     * @param activity the activity from which permissions are checked
-     */
 
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
-    }
 }
 
 

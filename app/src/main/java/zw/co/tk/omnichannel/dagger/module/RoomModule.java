@@ -9,6 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 import zw.co.tk.omnichannel.dao.AppDatabase;
 import zw.co.tk.omnichannel.dao.CustomerDao;
+import zw.co.tk.omnichannel.dao.CustomerDocumentDao;
 
 /**
  * Created by tdhla on 15-Dec-17.
@@ -36,4 +37,10 @@ public class RoomModule {
     CustomerDao providesCustomerDao(AppDatabase appDatabase) {
         return appDatabase.customerDao();
     }
+
+    @Singleton
+    @Provides
+    CustomerDocumentDao providesCustomerDocument(AppDatabase appDatabase){return appDatabase.customerDocumentDao(); }
+
+
 }

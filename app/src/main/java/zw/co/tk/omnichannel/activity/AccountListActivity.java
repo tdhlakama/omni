@@ -1,6 +1,9 @@
 package zw.co.tk.omnichannel.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -33,6 +36,16 @@ public class AccountListActivity extends MenuBar {
         List<Customer> customes = customerDao.getAll();
         CustomerAdapter adapter = new CustomerAdapter(this, customes);
         customerListView.setAdapter(adapter);
+
+        customerListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Customer item = (Customer) customerListView.getItemAtPosition(position);
+                Intent intent = new Intent(AccountListActivity.this, AccountDetailActivity.class);
+                intent.putExtra("customerId", item.getUid());
+                startActivity(intent);
+            }
+        });
 
     }
 }

@@ -55,7 +55,7 @@ public class AccountActivity extends MenuBar implements View.OnClickListener{
             customer.setCardNumber(et_cardNumber.getText().toString());
             long customerId = customerDao.insert(customer);
 
-            Intent intent = new Intent(AccountActivity.this, SignatureActivity.class);
+            Intent intent = new Intent(AccountActivity.this, AccountDetailActivity.class);
             intent.putExtra("customerId", Long.valueOf(customerId).intValue());
             startActivity(intent);
         }

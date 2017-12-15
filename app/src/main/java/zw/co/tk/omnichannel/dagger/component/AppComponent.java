@@ -4,9 +4,11 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import zw.co.tk.omnichannel.activity.AccountActivity;
+import zw.co.tk.omnichannel.activity.AccountDetailActivity;
 import zw.co.tk.omnichannel.activity.AccountListActivity;
 import zw.co.tk.omnichannel.activity.MainActivity;
 import zw.co.tk.omnichannel.activity.SignatureActivity;
+import zw.co.tk.omnichannel.activity.UploadDocumentActivity;
 import zw.co.tk.omnichannel.activity.UploadListActivity;
 import zw.co.tk.omnichannel.dagger.module.AppModule;
 import zw.co.tk.omnichannel.dagger.module.NetModule;
@@ -29,4 +31,7 @@ public interface AppComponent {
 
     void inject(SignatureActivity signatureActivity);
 
+    void inject(UploadDocumentActivity uploadDocumentActivity);
+
+    void inject(AccountDetailActivity accountDetailActivity);
 }
