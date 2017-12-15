@@ -108,4 +108,9 @@ public class Customer {
     public void setAccount_number(String account_number) {
         this.account_number = account_number;
     }
+
+    @Override
+    public String toString() {
+        return getFirstName() + " " + getSurname();
+    }
 }

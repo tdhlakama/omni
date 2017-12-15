@@ -53,9 +53,10 @@ public class AccountActivity extends MenuBar implements View.OnClickListener{
             customer.setPhoneNumber(et_phoneNumber.getText().toString());
             customer.setEmailAddress(et_emailAdress.getText().toString());
             customer.setCardNumber(et_cardNumber.getText().toString());
-            customerDao.insert(customer);
+            long customerId = customerDao.insert(customer);
 
-            Intent intent = new Intent(AccountActivity.this, AccountListActivity.class);
+            Intent intent = new Intent(AccountActivity.this, SignatureActivity.class);
+            intent.putExtra("customerId", Long.valueOf(customerId).intValue());
             startActivity(intent);
         }
 
