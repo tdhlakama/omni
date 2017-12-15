@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="zw.co.tk.omnichannel">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".OmniApplication"
         android:allowBackup="true"
@@ -11,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".acitvity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,15 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".acitvity.AccountListActivity"
+            android:name=".activity.AccountListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".acitvity.AccountActivity"
+            android:name=".activity.AccountActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".acitvity.UploadListActivity"
+            android:name=".activity.UploadListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

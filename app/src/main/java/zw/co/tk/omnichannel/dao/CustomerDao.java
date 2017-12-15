@@ -3,6 +3,7 @@ package zw.co.tk.omnichannel.dao;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -19,11 +20,8 @@ public interface CustomerDao {
     @Query("SELECT * FROM customer")
     List<Customer> getAll();
 
-    @Insert
-    void insertAll(Customer... customers);
-
-    @Update
-    void updateCustomers(Customer... customers);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(Customer customer);
 
     @Delete
     void delete(Customer customer);

@@ -1,4 +1,4 @@
-package zw.co.tk.omnichannel.acitvity;
+package zw.co.tk.omnichannel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,7 +53,7 @@ public class AccountActivity extends MenuBar implements View.OnClickListener{
             customer.setPhoneNumber(et_phoneNumber.getText().toString());
             customer.setEmailAddress(et_emailAdress.getText().toString());
             customer.setCardNumber(et_cardNumber.getText().toString());
-            customerDao.insertAll(customer);
+            customerDao.insert(customer);
 
             Intent intent = new Intent(AccountActivity.this, AccountListActivity.class);
             startActivity(intent);

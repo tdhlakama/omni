@@ -1,4 +1,4 @@
-package zw.co.tk.omnichannel.acitvity;
+package zw.co.tk.omnichannel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

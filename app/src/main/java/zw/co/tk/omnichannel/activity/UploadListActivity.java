@@ -1,4 +1,4 @@
-package zw.co.tk.omnichannel.acitvity;
+package zw.co.tk.omnichannel.activity;
 
 import android.os.Bundle;
 import android.widget.ListView;
