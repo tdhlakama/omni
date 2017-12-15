@@ -1,16 +1,14 @@
-package zw.co.tk.omnichannel;
+package zw.co.tk.omnichannel.acitvity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+
+import zw.co.tk.omnichannel.OmniApplication;
+import zw.co.tk.omnichannel.R;
 
 public class MainActivity extends MenuBar {
 
@@ -22,6 +20,8 @@ public class MainActivity extends MenuBar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        OmniApplication.appComponent.inject(MainActivity.this);
 
         syncBtn = (Button) findViewById(R.id.btn_sync);
         createAccountBtn = (Button) findViewById(R.id.btn_create_account);
@@ -39,6 +39,14 @@ public class MainActivity extends MenuBar {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AccountListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        syncBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UploadListActivity.class);
                 startActivity(intent);
             }
         });

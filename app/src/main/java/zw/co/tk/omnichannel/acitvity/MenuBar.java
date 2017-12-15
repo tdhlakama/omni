@@ -1,7 +1,9 @@
-package zw.co.tk.omnichannel;
+package zw.co.tk.omnichannel.acitvity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import zw.co.tk.omnichannel.R;
 
 /**
  * Created by tdhla on 15-Dec-17.
