@@ -10,24 +10,33 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import zw.co.tk.omnichannel.model.Customer;
+import zw.co.tk.omnichannel.model.ServerResponse;
 
 /**
  * Created by tdhla on 15-Dec-17.
  */
 public interface CustomerService {
 
-    @GET("/api/customers")
+
+    @GET("test")
+    Call<ServerResponse> getTestConnection();
+
+    @GET("customers")
     Call<List<Customer>> getCustomers();
 
-    @POST("/api/customer/register")
-    Customer registerCustomer(@Body Customer customer);
+    @POST("customer/register")
+    Call<ServerResponse> registerCustomer(@Body Customer customer);
 
-    @POST("/api/customer/register")
-    boolean registerCustomers(@Body List<Customer> customers);
+    @GET("customers")
+    Call<Customer> getCustomer(@Query("accountNumber") Long accountNumber);
 
     @Multipart
-    @POST("/api/customer/upload")
-    boolean uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+    @POST("/customerDocument/upload")
+    Call<ServerResponse> uploadImage(@Part MultipartBody.Part image, @Part("name")
+            RequestBody name, @Query("accountNumber") Long accountNumber,
+                                     @Query("documentType") String documentType);
 
 }

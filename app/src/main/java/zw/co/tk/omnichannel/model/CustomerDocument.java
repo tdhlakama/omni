@@ -3,6 +3,7 @@ package zw.co.tk.omnichannel.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.Bitmap;
 
 /**
  * Created by tdhla on 15-Dec-17.
@@ -10,9 +11,9 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class CustomerDocument {
 
-    public static String COPY_ID ="COPY OF ID";
-    public static String PROOF_OF_RESIDENCE ="PROOF OF RESIDENCE";
-    public static String SIGNATURE ="SIGNATURE";
+    public static String COPY_ID = "COPY OF ID";
+    public static String PROOF_OF_RESIDENCE = "PROOF OF RESIDENCE";
+    public static String SIGNATURE = "SIGNATURE";
 
     @PrimaryKey(autoGenerate = true)
     private int uid;
@@ -28,6 +29,9 @@ public class CustomerDocument {
 
     @ColumnInfo(name = "document", typeAffinity = ColumnInfo.BLOB)
     private byte[] document;
+
+    @ColumnInfo(name = "server_id")
+    private Long id;
 
     public int getUid() {
         return uid;
@@ -67,5 +71,13 @@ public class CustomerDocument {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

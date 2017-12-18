@@ -3,7 +3,13 @@ package zw.co.tk.omnichannel.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by tdhla on 15-Dec-17.
@@ -36,4 +42,19 @@ public class OmniUtil {
             );
         }
     }
+
+    public static byte[] getBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
+
+        int buffSize = 1024;
+        byte[] buff = new byte[buffSize];
+
+        int len = 0;
+        while ((len = is.read(buff)) != -1) {
+            byteBuff.write(buff, 0, len);
+        }
+
+        return byteBuff.toByteArray();
+    }
+
 }

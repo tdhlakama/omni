@@ -100,4 +100,12 @@
         android:layout_marginTop="8dp"
         android:text="Proof of Residence" />
 
+    <Button
+        style="@style/AppTheme.PrimaryButton"
+        android:id="@+id/btn_upload_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Upload File" />
+
 </LinearLayout>

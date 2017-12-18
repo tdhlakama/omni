@@ -35,7 +35,7 @@ public class Customer {
     private String emailAddress;
 
     @ColumnInfo(name = "account_number")
-    private String account_number;
+    private Long accountNumber;
 
     public int getUid() {
         return uid;
@@ -101,12 +101,12 @@ public class Customer {
         this.emailAddress = emailAddress;
     }
 
-    public String getAccount_number() {
-        return account_number;
+    public Long getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setAccount_number(String account_number) {
-        this.account_number = account_number;
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     @Override

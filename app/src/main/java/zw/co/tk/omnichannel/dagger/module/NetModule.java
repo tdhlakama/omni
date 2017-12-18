@@ -6,11 +6,15 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import okhttp3.Cache;
@@ -33,17 +37,24 @@ public class NetModule {
     @Provides
     @Singleton
     Gson provideGson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-        return gsonBuilder.create();
+        return new GsonBuilder()
+                //.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                //.setLenient()
+                .create();
     }
 
     @Provides
     @Singleton
     OkHttpClient provideOkhttpClient(Cache cache) {
-        OkHttpClient.Builder client = new OkHttpClient.Builder();
-        client.cache(cache);
-        return client.build();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return new OkHttpClient.Builder()
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .cache(cache)
+                .addInterceptor(logging)
+                .build();
     }
 
     @Provides
@@ -51,8 +62,20 @@ public class NetModule {
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("")
+                .baseUrl("http://192.168.20.225:8077/omni-web/api/")
                 .client(okHttpClient)
                 .build();
+    }
+
+    @Provides
+    @Named("devURL")
+    String devURl() {
+        return "http://192.168.20.225:8077/omni-web/api/";
+    }
+
+    @Provides
+    @Named("prodURL")
+    String prodURl() {
+        return "http://tk.co.zw:8077/omni-web/api";
     }
 }
