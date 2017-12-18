@@ -43,7 +43,6 @@ public class UploadDocumentActivity extends MenuBar {
     Button btnUpload, btnPickImage;
     String mediaPath;
     ImageView imgView;
-    String[] mediaColumns = {MediaStore.Video.Media._ID};
     ProgressDialog progressDialog;
     Customer customer;
     CustomerDocument customerDocument;
@@ -137,7 +136,7 @@ public class UploadDocumentActivity extends MenuBar {
         RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
         Call<ServerResponse> call = retrofit.create(CustomerService.class)
-                .uploadImage(fileToUpload, filename, customer.getAccountNumber(),documentType);
+                .uploadFile(fileToUpload, filename, customer.getAccountNumber(),documentType);
 
         call.enqueue(new Callback<ServerResponse>() {
             @Override

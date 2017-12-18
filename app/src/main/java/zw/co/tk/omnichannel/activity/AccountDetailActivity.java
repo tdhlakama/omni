@@ -36,7 +36,7 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
     Button btn_upload_file;
     Customer customer;
 
-    TextView txt_firstName, txt_surname, txt_address, txt_phone_number, txt_email_adress, txt_card_number;
+    TextView txt_firstName, txt_surname, txt_address, txt_phone_number, txt_email_adress, txt_card_number, txt_account_number;
 
     @Inject
     CustomerDao customerDao;
@@ -59,6 +59,7 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
         txt_phone_number = findViewById(R.id.txt_phone_number);
         txt_email_adress = findViewById(R.id.txt_email_adress);
         txt_card_number = findViewById(R.id.txt_card_number);
+        txt_account_number = findViewById(R.id.txt_account_number);
 
         txt_firstName.setText(customer.getFirstName());
         txt_surname.setText(customer.getSurname());
@@ -66,6 +67,7 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
         txt_phone_number.setText(customer.getPhoneNumber());
         txt_email_adress.setText(customer.getEmailAddress());
         txt_card_number.setText(customer.getCardNumber());
+        txt_account_number.setText(customer.getAccountNumber()!=null ?customer.getAccountNumber().toString() : "");
 
         btn_upload_image = findViewById(R.id.btn_upload_image);
         btn_upload_copy_of_id = findViewById(R.id.btn_upload_copy_of_id);

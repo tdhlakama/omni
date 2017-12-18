@@ -34,9 +34,9 @@ public interface CustomerService {
     Call<Customer> getCustomer(@Query("accountNumber") Long accountNumber);
 
     @Multipart
-    @POST("/customerDocument/upload")
-    Call<ServerResponse> uploadImage(@Part MultipartBody.Part image, @Part("name")
-            RequestBody name, @Query("accountNumber") Long accountNumber,
-                                     @Query("documentType") String documentType);
+    @POST("customerDocument/upload")
+    Call<ServerResponse> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name,
+                                    @Query("accountNumber") Long accountNumber,
+                                    @Query("documentType") String documentType);
 
 }
