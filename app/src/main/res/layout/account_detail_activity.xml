@@ -77,21 +77,27 @@
         android:hint="Card Number" />
 
     <Button
+        style="@style/AppTheme.PrimaryButton"
         android:id="@+id/btn_upload_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Signature" />
 
     <Button
+        style="@style/AppTheme.PrimaryButton"
         android:id="@+id/btn_upload_copy_of_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Copy of Id" />
+        android:layout_marginTop="8dp"
+        android:text="Copy of Id"
+      />
 
     <Button
+        style="@style/AppTheme.PrimaryButton"
         android:id="@+id/btn_upload_proof_of_residence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Proof of Residence" />
 
 </LinearLayout>

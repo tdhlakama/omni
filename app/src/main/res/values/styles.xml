@@ -17,4 +17,22 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.PrimaryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/round_button_secondary</item>
+    </style>
+
+    <style name="AppTheme.TertiaryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorTertiary</item>
+        <item name="android:textColor">@color/colorTertiary</item>
+        <item name="android:background">@drawable/round_button_tertiary</item>
+    </style>
+
+    <style name="AppTheme.SecondaryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorSecondary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/round_button_tertiary</item>
+    </style>
+
 </resources>

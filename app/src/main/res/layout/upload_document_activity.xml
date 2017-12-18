@@ -18,13 +18,17 @@
 
     <Button
         android:id="@+id/pick_img"
+        style="@style/AppTheme.PrimaryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Pick Image" />
 
     <Button
         android:id="@+id/upload"
+        style="@style/AppTheme.PrimaryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Upload" />
 </LinearLayout>
