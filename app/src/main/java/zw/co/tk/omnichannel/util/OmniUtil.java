@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
+import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -55,6 +56,11 @@ public class OmniUtil {
         }
 
         return byteBuff.toByteArray();
+    }
+
+    public static String getCredentials() {
+        String credentials = "admin" + ":" + "admin";
+        return "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
     }
 
 }

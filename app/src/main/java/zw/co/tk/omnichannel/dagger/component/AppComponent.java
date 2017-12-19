@@ -6,6 +6,7 @@ import dagger.Component;
 import zw.co.tk.omnichannel.activity.AccountActivity;
 import zw.co.tk.omnichannel.activity.AccountDetailActivity;
 import zw.co.tk.omnichannel.activity.AccountListActivity;
+import zw.co.tk.omnichannel.activity.LoginActivity;
 import zw.co.tk.omnichannel.activity.MainActivity;
 import zw.co.tk.omnichannel.activity.SignatureActivity;
 import zw.co.tk.omnichannel.activity.UploadDocumentActivity;
@@ -34,4 +35,6 @@ public interface AppComponent {
     void inject(UploadDocumentActivity uploadDocumentActivity);
 
     void inject(AccountDetailActivity accountDetailActivity);
+
+    void inject(LoginActivity loginActivity);
 }

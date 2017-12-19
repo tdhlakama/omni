@@ -1,13 +1,10 @@
 package zw.co.tk.omnichannel.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.RequiresPermission;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -23,6 +20,7 @@ import zw.co.tk.omnichannel.model.Customer;
 import zw.co.tk.omnichannel.model.CustomerDocument;
 import zw.co.tk.omnichannel.model.ServerResponse;
 import zw.co.tk.omnichannel.network.CustomerService;
+import zw.co.tk.omnichannel.util.OmniUtil;
 
 /**
  * Created by tdhla on 15-Dec-17.
@@ -67,7 +65,7 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
         txt_phone_number.setText(customer.getPhoneNumber());
         txt_email_adress.setText(customer.getEmailAddress());
         txt_card_number.setText(customer.getCardNumber());
-        txt_account_number.setText(customer.getAccountNumber()!=null ?customer.getAccountNumber().toString() : "");
+        txt_account_number.setText(customer.getAccountNumber() != null ? customer.getAccountNumber().toString() : "");
 
         btn_upload_image = findViewById(R.id.btn_upload_image);
         btn_upload_copy_of_id = findViewById(R.id.btn_upload_copy_of_id);
@@ -115,7 +113,8 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
 
     private void uploadCustomer(final Customer customer) {
 
-        Call<ServerResponse> call = retrofit.create(CustomerService.class).registerCustomer(customer);
+        Call<ServerResponse> call = retrofit.
+                create(CustomerService.class).registerCustomer(OmniUtil.getCredentials(), customer);
 
         call.enqueue(new Callback<ServerResponse>() {
             @Override

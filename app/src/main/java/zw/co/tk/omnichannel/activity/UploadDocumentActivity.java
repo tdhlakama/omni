@@ -136,7 +136,8 @@ public class UploadDocumentActivity extends MenuBar {
         RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
         Call<ServerResponse> call = retrofit.create(CustomerService.class)
-                .uploadFile(fileToUpload, filename, customer.getAccountNumber(),documentType);
+                .uploadFile(OmniUtil.getCredentials(),
+                        fileToUpload, filename, customer.getAccountNumber(), documentType);
 
         call.enqueue(new Callback<ServerResponse>() {
             @Override
