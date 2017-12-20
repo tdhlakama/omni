@@ -27,9 +27,12 @@ public interface CustomerDocumentDao {
     void delete(CustomerDocument customerDocument);
 
     @Query("SELECT * FROM customerdocument WHERE customer_id =:id")
-    List<Customer> getCustomerDocuments(int id);
+    List<CustomerDocument> getCustomerDocuments(int id);
 
     @Query("SELECT * FROM customerdocument WHERE uid=:uid")
     CustomerDocument getCustomerDocument(int uid);
+
+    @Query("SELECT * FROM customerdocument WHERE customer_id =:customerId and document_type=:documentType")
+    CustomerDocument getCustomerDocumentByCustomer(int customerId, String documentType);
 
 }

@@ -14,6 +14,7 @@ public class CustomerDocument {
     public static String COPY_ID = "COPY OF ID";
     public static String PROOF_OF_RESIDENCE = "PROOF OF RESIDENCE";
     public static String SIGNATURE = "SIGNATURE";
+    public static String IMAGE = "IMAGE";
 
     @PrimaryKey(autoGenerate = true)
     private int uid;

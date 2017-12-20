@@ -8,6 +8,7 @@ import zw.co.tk.omnichannel.activity.AccountDetailActivity;
 import zw.co.tk.omnichannel.activity.AccountListActivity;
 import zw.co.tk.omnichannel.activity.LoginActivity;
 import zw.co.tk.omnichannel.activity.MainActivity;
+import zw.co.tk.omnichannel.activity.PhotoActivity;
 import zw.co.tk.omnichannel.activity.SignatureActivity;
 import zw.co.tk.omnichannel.activity.UploadDocumentActivity;
 import zw.co.tk.omnichannel.activity.UploadListActivity;
@@ -37,4 +38,6 @@ public interface AppComponent {
     void inject(AccountDetailActivity accountDetailActivity);
 
     void inject(LoginActivity loginActivity);
+
+    void inject(PhotoActivity photoActivity);
 }

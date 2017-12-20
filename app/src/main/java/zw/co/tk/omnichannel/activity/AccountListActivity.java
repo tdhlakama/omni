@@ -44,6 +44,7 @@ public class AccountListActivity extends MenuBar {
                 Intent intent = new Intent(AccountListActivity.this, AccountDetailActivity.class);
                 intent.putExtra("customerId", item.getUid());
                 startActivity(intent);
+                finish();
             }
         });
 
