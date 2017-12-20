@@ -10,7 +10,6 @@ import zw.co.tk.omnichannel.activity.LoginActivity;
 import zw.co.tk.omnichannel.activity.MainActivity;
 import zw.co.tk.omnichannel.activity.PhotoActivity;
 import zw.co.tk.omnichannel.activity.SignatureActivity;
-import zw.co.tk.omnichannel.activity.UploadDocumentActivity;
 import zw.co.tk.omnichannel.activity.UploadListActivity;
 import zw.co.tk.omnichannel.dagger.module.AppModule;
 import zw.co.tk.omnichannel.dagger.module.NetModule;
@@ -32,8 +31,6 @@ public interface AppComponent {
     void inject(AccountActivity accountActivity);
 
     void inject(SignatureActivity signatureActivity);
-
-    void inject(UploadDocumentActivity uploadDocumentActivity);
 
     void inject(AccountDetailActivity accountDetailActivity);
 

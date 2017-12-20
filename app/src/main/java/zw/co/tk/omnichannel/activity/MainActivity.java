@@ -2,21 +2,28 @@ package zw.co.tk.omnichannel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import javax.inject.Inject;
+
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
+import zw.co.tk.omnichannel.dao.UserDao;
 
-public class MainActivity extends MenuBar {
+public class MainActivity extends AppCompatActivity {
 
     Button createAccountBtn;
     Button syncBtn;
     Button listAccountBtn;
     Button logoutBtn;
+
+    @Inject
+    UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,5 +103,9 @@ public class MainActivity extends MenuBar {
             finish();
         }
 
+    }
+
+    public void logout() {
+        userDao.deleteAll();
     }
 }

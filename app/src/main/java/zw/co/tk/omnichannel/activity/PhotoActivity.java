@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,7 +32,7 @@ import zw.co.tk.omnichannel.util.OmniUtil;
  * Created by tdhla on 19-Dec-17.
  */
 
-public class PhotoActivity extends MenuBar {
+public class PhotoActivity extends AppCompatActivity {
 
     @Inject
     CustomerDao customerDao;

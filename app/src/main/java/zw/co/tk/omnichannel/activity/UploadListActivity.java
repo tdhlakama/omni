@@ -1,6 +1,7 @@
 package zw.co.tk.omnichannel.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import zw.co.tk.omnichannel.model.Customer;
  * Created by tdhla on 15-Dec-17.
  */
 
-public class UploadListActivity extends MenuBar {
+public class UploadListActivity extends AppCompatActivity {
 
     ListView customerListView;
 

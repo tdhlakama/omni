@@ -1,7 +1,11 @@
 package zw.co.tk.omnichannel.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +41,7 @@ import zw.co.tk.omnichannel.util.OmniUtil;
  * Created by tdhla on 15-Dec-17.
  */
 
-public class AccountDetailActivity extends MenuBar implements View.OnClickListener {
+public class AccountDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btn_upload_file;
     Customer customer;
@@ -77,19 +81,17 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
         CustomerDocumentAdapter adapter = new CustomerDocumentAdapter(AccountDetailActivity.this, getDocs());
         documentListView.setAdapter(adapter);
 
-        txt_firstName.setText(customer.getFirstName());
-        txt_surname.setText(customer.getSurname());
-        txt_address.setText(customer.getAddress());
-        txt_phone_number.setText(customer.getPhoneNumber());
-        txt_email_adress.setText(customer.getEmailAddress());
-        txt_card_number.setText(customer.getCardNumber());
+        txt_firstName.setText("First Name: " + customer.getFirstName());
+        txt_surname.setText("Surname: " + customer.getSurname());
+        txt_address.setText("Address: " + customer.getAddress());
+        txt_phone_number.setText("Phone Number: " + customer.getPhoneNumber());
+        txt_email_adress.setText("Email: " + customer.getEmailAddress());
+        txt_card_number.setText("Card Number: " + customer.getCardNumber());
 
-        if(customer.getAccountNumber()!=null) {
-            txt_account_number.setText("Account Number " + customer.getAccountNumber());
-            txt_account_number.setBackgroundColor(R.style.AppTheme_SecondaryButton);
+        if (customer.getAccountNumber() != null) {
+            txt_account_number.setText("Account Number: " + customer.getAccountNumber());
+            txt_account_number.setBackgroundColor(R.drawable.round_button_tertiary);
         }
-
-        txt_account_number.setText(customer.getAccountNumber() != null ? customer.getAccountNumber().toString() : "");
 
         btn_upload_file = findViewById(R.id.btn_upload_file);
 
@@ -155,10 +157,10 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
 
                     uploadDocuments();
 
-                    txt_account_number.setText("Account Number " + customer.getAccountNumber());
+                    txt_account_number.setText("Account Number: " + customer.getAccountNumber());
                     txt_account_number.setBackgroundColor(R.style.AppTheme_SecondaryButton);
 
-                    btn_upload_file.setText("File Uploaded - Account Number " + customer.getAccountNumber());
+                    btn_upload_file.setText("File Uploaded Successfully");
                     btn_upload_file.setEnabled(false);
 
                     Toast.makeText(AccountDetailActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
@@ -169,6 +171,9 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
                 @Override
                 public void onFailure(Call<ServerResponse> call, Throwable t) {
                     Log.e("Account", "Error Account Number" + t.getMessage());
+
+                    Toast.makeText(AccountDetailActivity.this, "Upload Failed, Please Try Again", Toast.LENGTH_SHORT).show();
+                    progressDialog.hide();
                 }
             });
         }
@@ -227,6 +232,8 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
                 @Override
                 public void onFailure(Call<ServerResponse> call, Throwable t) {
 
+                    Toast.makeText(AccountDetailActivity.this, "Upload Failed, Please Try Again", Toast.LENGTH_SHORT).show();
+                    progressDialog.hide();
                 }
             });
         }
@@ -257,5 +264,16 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
         }
         return true;
     }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityMgr.getActiveNetworkInfo();
+        /// if no network is available networkInfo will be null
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

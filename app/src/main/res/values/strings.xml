@@ -1,5 +1,12 @@
 <resources>
+    <string name="app_menu">Omni Menu</string>
+    <string name="app_create">Create Account</string>
+    <string name="app_list">Accounts List</string>
+    <string name="app_upload_list">Upload Account List</string>
+    <string name="app_detail">Account Detail</string>
     <string name="app_name">Omni Channel</string>
+    <string name="app_photo">Save Photo</string>
+    <string name="app_signature">Save Signature</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Omni App Login</string>
 

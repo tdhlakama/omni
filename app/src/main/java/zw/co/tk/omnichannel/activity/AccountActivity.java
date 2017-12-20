@@ -2,6 +2,7 @@ package zw.co.tk.omnichannel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,7 @@ import zw.co.tk.omnichannel.model.Customer;
  * Created by tdhla on 15-Dec-17.
  */
 
-public class AccountActivity extends MenuBar implements View.OnClickListener{
+public class AccountActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText et_firstName,et_surname,et_address,et_phoneNumber,et_emailAdress,et_cardNumber,et_idNumber;
     Button btn_save;

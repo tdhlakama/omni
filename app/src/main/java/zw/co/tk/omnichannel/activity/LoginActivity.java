@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -147,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onFailure(Call<User> call, Throwable t) {
                     t.printStackTrace();
                     showProgress(false);
-
+                    Toast.makeText(LoginActivity.this, "Login Failed, Please Try Again", Toast.LENGTH_SHORT).show();
 
                 }
             });

@@ -2,6 +2,7 @@ package zw.co.tk.omnichannel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,7 +21,7 @@ import zw.co.tk.omnichannel.model.Customer;
  * Created by tdhla on 15-Dec-17.
  */
 
-public class AccountListActivity extends MenuBar {
+public class AccountListActivity extends AppCompatActivity {
 
     ListView customerListView;
     @Inject
