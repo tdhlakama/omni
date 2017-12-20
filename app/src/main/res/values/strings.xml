@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Omni Channel</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Omni App Login</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>

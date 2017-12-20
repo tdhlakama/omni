@@ -2,6 +2,7 @@ package zw.co.tk.omnichannel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ public class MainActivity extends MenuBar {
     Button createAccountBtn;
     Button syncBtn;
     Button listAccountBtn;
+    Button logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +25,13 @@ public class MainActivity extends MenuBar {
 
         OmniApplication.appComponent.inject(MainActivity.this);
 
-        syncBtn = (Button) findViewById(R.id.btn_sync);
-        createAccountBtn = (Button) findViewById(R.id.btn_create_account);
-        listAccountBtn = (Button) findViewById(R.id.btn_list_accounts);
+        redirectToMain();
+
+        syncBtn = findViewById(R.id.btn_sync);
+        createAccountBtn = findViewById(R.id.btn_create_account);
+        listAccountBtn = findViewById(R.id.btn_list_accounts);
+        logoutBtn = findViewById(R.id.btn_logout);
+
 
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +56,14 @@ public class MainActivity extends MenuBar {
                 startActivity(intent);
             }
         });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+                redirectToMain();
+            }
+        });
     }
 
     @Override
@@ -72,5 +86,15 @@ public class MainActivity extends MenuBar {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void redirectToMain() {
+
+        if (userDao.getAll().isEmpty()) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 }

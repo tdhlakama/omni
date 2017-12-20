@@ -61,7 +61,7 @@ public class NetModule {
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("http://192.168.1.103:8077/omni-web/api/")
+                .baseUrl("http://192.168.20.225:8077/omni-web/api/")
                 .client(okHttpClient)
                 .build();
     }
@@ -69,7 +69,7 @@ public class NetModule {
     @Provides
     @Named("devURL")
     String devURl() {
-        return "http://192.168.1.103:8077/omni-web/api/";
+        return "http://192.168.20.225:8077/omni-web/api/";
     }
 
     @Provides

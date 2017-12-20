@@ -3,6 +3,7 @@ package zw.co.tk.omnichannel.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -24,6 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
+import zw.co.tk.omnichannel.dao.UserDao;
 import zw.co.tk.omnichannel.model.User;
 import zw.co.tk.omnichannel.network.CustomerService;
 import zw.co.tk.omnichannel.util.OmniUtil;
@@ -42,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
 
+    @Inject
+    UserDao userDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +55,10 @@ public class LoginActivity extends AppCompatActivity {
 
         OmniApplication.appComponent.inject(LoginActivity.this);
 
-        mUsernameView = (EditText) findViewById(R.id.username);
-        mPasswordView = (EditText) findViewById(R.id.password);
+        redirectToMain();
+
+        mUsernameView = findViewById(R.id.username);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -62,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button btn_login = findViewById(R.id.btn_login);
+        btn_login.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -86,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String username = mUsernameView.getText().toString();
+        final String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -122,18 +130,26 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
 
                     User user = response.body();
+
                     if (user != null) {
-                        Log.e("Account", "New Account Number " + user.getUsername());
+                        userDao.deleteAll();
+                        Long id = userDao.insert(user);
+                        Log.v("Login Activity", "---------------------- " + id);
                         showProgress(false);
+                        redirectToMain();
                     } else {
-                        Log.e("Account", "User Is Null ");
+                        showProgress(false);
+                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                     }
+
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     t.printStackTrace();
-                    Log.e("Account", "New Account Number ");
+                    showProgress(false);
+
+
                 }
             });
 
@@ -176,6 +192,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void redirectToMain() {
 
+        if (!userDao.getAll().isEmpty()) {
+            Log.v("Login Activity", "----------------------List is not empty");
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Log.v("Login Activity", "----------------------List is empty");
+        }
+
+    }
 }
 
