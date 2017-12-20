@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(true);
 
             Call<User> firstCall = retrofit.create(CustomerService.class)
-                    .getUser(OmniUtil.getCredentials(), "admin");
+                    .getUser(OmniUtil.getCredentials());
 
             firstCall.enqueue(new Callback<User>() {
                 @Override
@@ -134,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (user != null) {
                         userDao.deleteAll();
                         Long id = userDao.insert(user);
-                        Log.v("Login Activity", "---------------------- " + id);
                         showProgress(false);
                         redirectToMain();
                     } else {
@@ -195,12 +194,9 @@ public class LoginActivity extends AppCompatActivity {
     public void redirectToMain() {
 
         if (!userDao.getAll().isEmpty()) {
-            Log.v("Login Activity", "----------------------List is not empty");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            Log.v("Login Activity", "----------------------List is empty");
         }
 
     }

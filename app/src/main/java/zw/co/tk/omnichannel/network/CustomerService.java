@@ -27,7 +27,7 @@ public interface CustomerService {
     Call<ServerResponse> getTestConnection(@Header("Authorization") String authHeader);
 
     @GET("user")
-    Call<User> getUser(@Header("Authorization") String authHeader, @Query("username") String username);
+    Call<User> getUser(@Header("Authorization") String authHeader);
 
     @GET("customers")
     Call<List<Customer>> getCustomers(@Header("Authorization") String authHeader);
