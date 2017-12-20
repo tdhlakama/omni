@@ -1,14 +1,17 @@
 package zw.co.tk.omnichannel.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
+import zw.co.tk.omnichannel.adpater.CustomerDocumentAdapter;
 import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.dao.CustomerDocumentDao;
 import zw.co.tk.omnichannel.model.Customer;
@@ -35,14 +39,11 @@ import zw.co.tk.omnichannel.util.OmniUtil;
 
 public class AccountDetailActivity extends MenuBar implements View.OnClickListener {
 
-    Button btn_upload_image;
-    Button btn_upload_signature;
-    Button btn_upload_copy_of_id;
-    Button btn_upload_proof_of_residence;
     Button btn_upload_file;
     Customer customer;
     ProgressDialog progressDialog;
-    CustomerDocument customerDocument;
+
+    ListView documentListView;
 
     TextView txt_firstName, txt_surname, txt_address, txt_phone_number, txt_email_adress, txt_card_number, txt_account_number;
 
@@ -52,7 +53,6 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
     CustomerDocumentDao customerDocumentDao;
     @Inject
     Retrofit retrofit;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,140 +72,74 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
         txt_card_number = findViewById(R.id.txt_card_number);
         txt_account_number = findViewById(R.id.txt_account_number);
 
+        documentListView = findViewById(R.id.list);
+
+        CustomerDocumentAdapter adapter = new CustomerDocumentAdapter(AccountDetailActivity.this, getDocs());
+        documentListView.setAdapter(adapter);
+
         txt_firstName.setText(customer.getFirstName());
         txt_surname.setText(customer.getSurname());
         txt_address.setText(customer.getAddress());
         txt_phone_number.setText(customer.getPhoneNumber());
         txt_email_adress.setText(customer.getEmailAddress());
         txt_card_number.setText(customer.getCardNumber());
+
+        if(customer.getAccountNumber()!=null) {
+            txt_account_number.setText("Account Number " + customer.getAccountNumber());
+            txt_account_number.setBackgroundColor(R.style.AppTheme_SecondaryButton);
+        }
+
         txt_account_number.setText(customer.getAccountNumber() != null ? customer.getAccountNumber().toString() : "");
 
-        btn_upload_signature = findViewById(R.id.btn_upload_signature);
-        btn_upload_image = findViewById(R.id.btn_upload_image);
-        btn_upload_copy_of_id = findViewById(R.id.btn_upload_copy_of_id);
-        btn_upload_proof_of_residence = findViewById(R.id.btn_upload_proof_of_residence);
         btn_upload_file = findViewById(R.id.btn_upload_file);
 
-        btn_upload_image.setOnClickListener(this);
-        btn_upload_copy_of_id.setOnClickListener(this);
-        btn_upload_proof_of_residence.setOnClickListener(this);
         btn_upload_file.setOnClickListener(this);
-        btn_upload_signature.setOnClickListener(this);
-
-        boolean customerInfo = customer.getAccountNumber() == null;
-        btn_upload_file.setVisibility(customerInfo ? View.VISIBLE : View.GONE);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Uploading...");
+        boolean customerInfo = customer.getAccountNumber() == null;
 
-        if (customer.getAccountNumber() != null) {
-            btn_upload_signature.setText("Account Detail Updated");
-            btn_upload_signature.setEnabled(false);
+        if (filesReadyForUpload()) {
+            btn_upload_file.setText("Upload File");
         } else {
-            btn_upload_signature.setText("Upload Account Details");
+            btn_upload_file.setText("Upload Required Documents");
+            btn_upload_file.setEnabled(false);
         }
 
-        if (documentReadyForUpload(CustomerDocument.SIGNATURE)) {
-            if (get(CustomerDocument.SIGNATURE).getId() != null) {
-                btn_upload_image.setText("Submitted Image");
-                btn_upload_image.setEnabled(false);
+        if (customerInfo && allFilesUploaded()) {
+            btn_upload_file.setText("File Uploaded Successfully");
+            btn_upload_file.setEnabled(false);
+        }
+    }
+
+    public List<CustomerDocument> getDocs() {
+        List<CustomerDocument> customerDocuments = new ArrayList<>();
+        for (String type : OmniUtil.getDocumentsTypes()) {
+            CustomerDocument document = get(type);
+            if (document == null) {
+                CustomerDocument d = new CustomerDocument();
+                d.setCustomerId(customer.getUid());
+                d.setDocumentType(type);
+                customerDocuments.add(d);
             } else {
-                btn_upload_image.setText("Upload Image");
+                customerDocuments.add(document);
             }
         }
-
-        if (documentReadyForUpload(CustomerDocument.SIGNATURE)) {
-            if (get(CustomerDocument.SIGNATURE).getId() != null) {
-                btn_upload_signature.setText("Submitted Signature");
-                btn_upload_signature.setEnabled(false);
-            } else {
-                btn_upload_signature.setText("Upload Signature");
-            }
-        }
-
-
-        if (documentReadyForUpload(CustomerDocument.COPY_ID)) {
-            if (get(CustomerDocument.COPY_ID).getId() != null) {
-                btn_upload_copy_of_id.setText("Submitted Copy Of ID");
-                btn_upload_copy_of_id.setEnabled(false);
-            } else {
-                btn_upload_copy_of_id.setText("Upload Copy Of ID");
-            }
-        }
-
-        if (documentReadyForUpload(CustomerDocument.PROOF_OF_RESIDENCE)) {
-            if (get(CustomerDocument.PROOF_OF_RESIDENCE).getId() != null) {
-                btn_upload_copy_of_id.setText("Submitted Proof of Residence");
-                btn_upload_copy_of_id.setEnabled(false);
-            } else {
-                btn_upload_proof_of_residence.setText("Upload Proof of Residence");
-            }
-        }
-
+        return customerDocuments;
     }
 
     @Override
     public void onClick(View view) {
-
-        if (view.getId() == btn_upload_image.getId()) {
-            if (documentReadyForUpload(CustomerDocument.SIGNATURE)) {
-                customerDocument = get(CustomerDocument.SIGNATURE);
-            } else {
-                Intent intent = new Intent(AccountDetailActivity.this, SignatureActivity.class);
-                intent.putExtra("customerId", customer.getUid());
-                intent.putExtra("documentType", CustomerDocument.SIGNATURE);
-                startActivity(intent);
-            }
-        }
-
-        if (view.getId() == btn_upload_image.getId()) {
-
-            if (documentReadyForUpload(CustomerDocument.IMAGE)) {
-                customerDocument = get(CustomerDocument.IMAGE);
-            } else {
-                Intent intent = new Intent(AccountDetailActivity.this, PhotoActivity.class);
-                intent.putExtra("customerId", customer.getUid());
-                intent.putExtra("documentType", CustomerDocument.IMAGE);
-                startActivity(intent);
-                finish();
-            }
-        }
-
-        if (view.getId() == btn_upload_copy_of_id.getId()) {
-
-            if (documentReadyForUpload(CustomerDocument.COPY_ID)) {
-                customerDocument = get(CustomerDocument.COPY_ID);
-            } else {
-                Intent intent = new Intent(AccountDetailActivity.this, PhotoActivity.class);
-                intent.putExtra("customerId", customer.getUid());
-                intent.putExtra("documentType", CustomerDocument.COPY_ID);
-                startActivity(intent);
-                finish();
-            }
-        }
-
-        if (view.getId() == btn_upload_proof_of_residence.getId()) {
-
-            if (documentReadyForUpload(CustomerDocument.PROOF_OF_RESIDENCE)) {
-                customerDocument = get(CustomerDocument.PROOF_OF_RESIDENCE);
-            } else {
-
-                Intent intent = new Intent(AccountDetailActivity.this, PhotoActivity.class);
-                intent.putExtra("customerId", customer.getUid());
-                intent.putExtra("documentType", CustomerDocument.PROOF_OF_RESIDENCE);
-                startActivity(intent);
-            }
-        }
-
         if (view.getId() == btn_upload_file.getId())
-            if(isNetworkAvailable())
-            uploadCustomer(customer);
+            if (isNetworkAvailable())
+                uploadCustomer();
     }
 
-    Long customerAccountNumber = null;
+    private void uploadCustomer() {
+        progressDialog.show();
 
-    private void uploadCustomer(final Customer customer) {
-        if (customer.getAccountNumber() == null ) {
+        if (customer.getAccountNumber() == null) {
+
             Call<ServerResponse> call = retrofit.
                     create(CustomerService.class).registerCustomer(OmniUtil.getCredentials(), customer);
 
@@ -215,79 +149,113 @@ public class AccountDetailActivity extends MenuBar implements View.OnClickListen
 
                     ServerResponse serverResponse = response.body();
                     customer.setAccountNumber(serverResponse.getId());
-                    customerAccountNumber = serverResponse.getId();
                     customerDao.insert(customer);
 
-                    Log.e("Account", "New Account Number " + serverResponse.getId());
+                    customer = customerDao.getCustomer(customer.getUid());
+
+                    uploadDocuments();
+
+                    txt_account_number.setText("Account Number " + customer.getAccountNumber());
+                    txt_account_number.setBackgroundColor(R.style.AppTheme_SecondaryButton);
+
+                    btn_upload_file.setText("File Uploaded - Account Number " + customer.getAccountNumber());
+                    btn_upload_file.setEnabled(false);
+
+                    Toast.makeText(AccountDetailActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+
+                    progressDialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<ServerResponse> call, Throwable t) {
                     Log.e("Account", "Error Account Number" + t.getMessage());
-
                 }
             });
-        } else
-            customerAccountNumber = customer.getAccountNumber();
+        }
 
-        for (CustomerDocument customerDocument : customerDocumentDao.getCustomerDocuments(customer.getUid())) {
-            if (customerAccountNumber != null)
-                uploadFile(customerDocument);
+
+    }
+
+    public void uploadDocuments() {
+
+        for (CustomerDocument item : customerDocumentDao.getCustomerDocuments(customer.getUid())) {
+            try {
+                if (customer.getAccountNumber() != null && item.getId() == null && item.getPath() != null)
+                    uploadFile(item);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                continue;
+            }
+
         }
     }
 
-    private void uploadFile(CustomerDocument newCustomerDocument) {
+    private void uploadFile(final CustomerDocument newCustomerDocument) {
 
-        this.customerDocument = newCustomerDocument;
+        if (newCustomerDocument != null) {
+            File file = new File(newCustomerDocument.getPath());
 
-        progressDialog.show();
+            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
-        File file = new File(customerDocument.getPath());
+            Call<ServerResponse> call = retrofit.create(CustomerService.class)
+                    .uploadFile(OmniUtil.getCredentials(),
+                            fileToUpload, filename, customer.getAccountNumber(), newCustomerDocument.getDocumentType());
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+            call.enqueue(new Callback<ServerResponse>() {
+                @Override
+                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
 
-        Call<ServerResponse> call = retrofit.create(CustomerService.class)
-                .uploadFile(OmniUtil.getCredentials(),
-                        fileToUpload, filename, customer.getAccountNumber(), customerDocument.getDocumentType());
-
-        call.enqueue(new Callback<ServerResponse>() {
-            @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-
-                ServerResponse serverResponse = response.body();
-                if (serverResponse != null) {
-                    if (!serverResponse.getId().equals(0L)) {
-                        customerDocument.setId(serverResponse.getId());
-                        customerDocumentDao.insert(customerDocument);
-                    } else {
-                        Log.v("Response", "Cannot save");
+                    ServerResponse serverResponse = response.body();
+                    if (serverResponse != null) {
+                        try {
+                            if (serverResponse.getId() != null && !serverResponse.getId().equals(0L)) {
+                                CustomerDocument customerDocument = customerDocumentDao.getCustomerDocument(newCustomerDocument.getUid());
+                                customerDocument.setId(serverResponse.getId());
+                                customerDocumentDao.insert(customerDocument);
+                            } else {
+                                Log.v("Response", "Cannot save" + response.body());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-                progressDialog.dismiss();
-                customerDocument = null;
-            }
 
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                customerDocument = null;
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<ServerResponse> call, Throwable t) {
 
-    }
+                }
+            });
+        }
 
-    public boolean documentReadyForUpload(String documentType) {
-        CustomerDocument document = get(documentType);
-        if (document != null && document.getPath() != null)
-            return true;
-        else
-            return false;
+
     }
 
     private CustomerDocument get(String documentType) {
         return customerDocumentDao.getCustomerDocumentByCustomer(customer.getUid(), documentType);
+    }
+
+    public boolean filesReadyForUpload() {
+        for (String type : OmniUtil.getDocumentsTypes()) {
+            CustomerDocument document = get(type);
+            if (document == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean allFilesUploaded() {
+        for (String type : OmniUtil.getDocumentsTypes()) {
+            CustomerDocument document = get(type);
+            if (document != null && document.getId() == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

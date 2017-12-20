@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,12 +18,6 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
@@ -32,8 +25,6 @@ import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.dao.CustomerDocumentDao;
 import zw.co.tk.omnichannel.model.Customer;
 import zw.co.tk.omnichannel.model.CustomerDocument;
-import zw.co.tk.omnichannel.model.ServerResponse;
-import zw.co.tk.omnichannel.network.CustomerService;
 import zw.co.tk.omnichannel.util.OmniUtil;
 
 /**
@@ -118,6 +109,7 @@ public class PhotoActivity extends MenuBar {
                 picFrame.setImageBitmap(bitmap);
             } else {
                 Toast.makeText(this.getApplicationContext(), "Picture not taken!", Toast.LENGTH_SHORT).show();
+                goBack();
             }
         }
     }
@@ -157,5 +149,10 @@ public class PhotoActivity extends MenuBar {
         intent.putExtra("customerId", customer.getUid());
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        goBack();
     }
 }

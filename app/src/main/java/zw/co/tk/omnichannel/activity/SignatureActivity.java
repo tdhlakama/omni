@@ -1,18 +1,12 @@
 package zw.co.tk.omnichannel.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,19 +16,10 @@ import android.widget.Toast;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
 import javax.inject.Inject;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
@@ -42,8 +27,6 @@ import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.dao.CustomerDocumentDao;
 import zw.co.tk.omnichannel.model.Customer;
 import zw.co.tk.omnichannel.model.CustomerDocument;
-import zw.co.tk.omnichannel.model.ServerResponse;
-import zw.co.tk.omnichannel.network.CustomerService;
 import zw.co.tk.omnichannel.util.OmniUtil;
 
 /**
@@ -54,7 +37,6 @@ public class SignatureActivity extends MenuBar {
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
 
-    private static String[] PERMISSIONS_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private SignaturePad mSignaturePad;
     private Button mClearButton;
     private Button mSaveButton;
@@ -78,8 +60,11 @@ public class SignatureActivity extends MenuBar {
 
         OmniApplication.appComponent.inject(SignatureActivity.this);
 
-        int customerId = getIntent().getIntExtra("customerId", 0);
+        final int customerId = getIntent().getIntExtra("customerId", 0);
         customer = customerDao.getCustomer(customerId);
+        customerDocument = new CustomerDocument();
+        customerDocument.setDocumentType(OmniUtil.SIGNATURE);
+        customerDocument.setCustomerId(customerId);
 
         TextView signature_pad_description = findViewById(R.id.signature_pad_description);
         signature_pad_description.setText("Agree " + customer);
@@ -122,16 +107,13 @@ public class SignatureActivity extends MenuBar {
             @Override
             public void onClick(View view) {
                 Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
-                customerDocument = new CustomerDocument();
-                customerDocument.setDocumentType(CustomerDocument.SIGNATURE);
 
                 if (addJpgSignatureToGallery(signatureBitmap)) {
                     Toast.makeText(SignatureActivity.this, "Signature saved into the Gallery", Toast.LENGTH_SHORT).show();
-                        goBack();
+                    goBack();
                 } else {
                     Toast.makeText(SignatureActivity.this, "Unable to store the signature", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -156,7 +138,11 @@ public class SignatureActivity extends MenuBar {
         try {
             File photo = new File(OmniUtil.getAlbumStorageDir("OmniApp"), String.format("Signature_%d.jpg", System.currentTimeMillis()));
             customerDocument.setPath(photo.getPath());
-            customerDocumentDao.insert(customerDocument);
+            if (customerDocument.getPath() != null) {
+                customerDocumentDao.insert(customerDocument);
+            } else {
+                return false;
+            }
             OmniUtil.saveBitmapToJPG(signature, photo);
             scanMediaFile(photo);
             result = true;
@@ -174,11 +160,16 @@ public class SignatureActivity extends MenuBar {
         SignatureActivity.this.sendBroadcast(mediaScanIntent);
     }
 
-    public void goBack(){
+    public void goBack() {
         Intent intent = new Intent(SignatureActivity.this, AccountDetailActivity.class);
         intent.putExtra("customerId", customer.getUid());
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        goBack();
     }
 }
 

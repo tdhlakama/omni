@@ -15,4 +15,15 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="prompt_status">Status</string>
+    <string name="prompt_documentType">Document Type</string>
+    <string name="prompt_firstName">First Name</string>
+    <string name="prompt_surname">Surname</string>
+    <string name="prompt_idNumber">Id Number</string>
+    <string name="prompt_cardNumber">Card Number</string>
+    <string name="prompt_address">Address</string>
+    <string name="prompt_phone">Phone Number</string>
+    <string name="prompt_email">Email Address</string>
+
 </resources>

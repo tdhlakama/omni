@@ -20,7 +20,7 @@
     <style name="AppTheme.PrimaryButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@drawable/round_button_secondary</item>
+        <item name="android:background">@drawable/round_button_primary</item>
     </style>
 
     <style name="AppTheme.TertiaryButton" parent="Widget.AppCompat.Button.Colored">
@@ -32,7 +32,7 @@
     <style name="AppTheme.SecondaryButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/colorSecondary</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@drawable/round_button_tertiary</item>
+        <item name="android:background">@drawable/round_button_secondary</item>
     </style>
 
 </resources>

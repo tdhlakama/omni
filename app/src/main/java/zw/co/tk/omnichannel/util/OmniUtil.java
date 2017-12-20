@@ -19,12 +19,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by tdhla on 15-Dec-17.
  */
 
 public class OmniUtil {
+
+    public static String COPY_ID = "COPY OF ID";
+    public static String PROOF_OF_RESIDENCE = "PROOF OF RESIDENCE";
+    public static String SIGNATURE = "SIGNATURE";
+    public static String IMAGE = "IMAGE";
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
 
@@ -91,6 +102,12 @@ public class OmniUtil {
         OutputStream stream = new FileOutputStream(photo);
         newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
         stream.close();
+    }
+
+    public static List<String> getDocumentsTypes() {
+        String[] documents = {COPY_ID, PROOF_OF_RESIDENCE, SIGNATURE, IMAGE};
+        Arrays.asList(documents);
+        return Arrays.asList(documents);
     }
 
 

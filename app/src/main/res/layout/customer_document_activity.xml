@@ -7,29 +7,28 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-        android:id="@+id/et_first_name"
+        android:id="@+id/txt_documentType"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_height="22dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="First Name"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="@string/prompt_documentType"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/et_surname"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btnUpload"
+        style="@style/AppTheme.PrimaryButton"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Surname"
+        android:hint="@string/prompt_status"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_first_name" />
+        app:layout_constraintStart_toEndOf="@+id/txt_documentType"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
