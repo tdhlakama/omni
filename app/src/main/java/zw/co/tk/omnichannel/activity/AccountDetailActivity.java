@@ -91,7 +91,7 @@ public class AccountDetailActivity extends AppCompatActivity implements View.OnC
         if (customer.getAccountNumber() != null) {
             txt_account_number.setText("Account Number: " + customer.getAccountNumber());
             txt_account_number.setBackgroundColor(R.drawable.round_button_tertiary);
-        }else{
+        } else {
             txt_account_number.setText("Account Number: TBA");
         }
 
@@ -101,6 +101,8 @@ public class AccountDetailActivity extends AppCompatActivity implements View.OnC
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Uploading...");
+        progressDialog.setCancelable(true);
+
         boolean customerInfo = customer.getAccountNumber() != null;
 
         if (filesReadyForUpload()) {
@@ -278,5 +280,12 @@ public class AccountDetailActivity extends AppCompatActivity implements View.OnC
         return false;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+        super.onDestroy();
+    }
 }

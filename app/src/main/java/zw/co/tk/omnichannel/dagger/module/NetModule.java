@@ -37,8 +37,6 @@ public class NetModule {
     @Singleton
     Gson provideGson() {
         return new GsonBuilder()
-                //.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                //.setLenient()
                 .create();
     }
 
@@ -58,10 +56,10 @@ public class NetModule {
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient, @Named("devURL") String url) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("http://192.168.20.225:8077/omni-web/api/")
+                .baseUrl(url)
                 .client(okHttpClient)
                 .build();
     }
@@ -69,7 +67,7 @@ public class NetModule {
     @Provides
     @Named("devURL")
     String devURl() {
-        return "http://192.168.20.225:8077/omni-web/api/";
+        return "http://tk.co.zw:8077/omni-web/api/";
     }
 
     @Provides
