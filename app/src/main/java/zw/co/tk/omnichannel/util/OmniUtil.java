@@ -77,8 +77,8 @@ public class OmniUtil {
         return byteBuff.toByteArray();
     }
 
-    public static String getCredentials() {
-        String credentials = "admin" + ":" + "admin";
+    public static String getCredentials(String username, String password) {
+        String credentials = password + ":" + password;
         return "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
     }
 
@@ -106,7 +106,6 @@ public class OmniUtil {
 
     public static List<String> getDocumentsTypes() {
         String[] documents = {COPY_ID, PROOF_OF_RESIDENCE, SIGNATURE, IMAGE};
-        Arrays.asList(documents);
         return Arrays.asList(documents);
     }
 

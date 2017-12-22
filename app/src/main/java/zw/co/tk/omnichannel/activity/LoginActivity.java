@@ -122,7 +122,8 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(true);
 
             Call<User> firstCall = retrofit.create(CustomerService.class)
-                    .getUser(OmniUtil.getCredentials());
+                    .getUser(OmniUtil.getCredentials(mUsernameView.getText().toString(),
+                            mPasswordView.getText().toString()));
 
             firstCall.enqueue(new Callback<User>() {
                 @Override
@@ -132,7 +133,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (user != null) {
                         userDao.deleteAll();
-                        Long id = userDao.insert(user);
+                        user.setPassword(username);
+                        userDao.insert(user);
                         showProgress(false);
                         redirectToMain();
                     } else {
