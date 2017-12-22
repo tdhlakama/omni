@@ -1,8 +1,8 @@
 <resources>
     <string name="app_menu">Omni Menu</string>
     <string name="app_create">Create Account</string>
-    <string name="app_list">Accounts List</string>
-    <string name="app_upload_list">Upload Account List</string>
+    <string name="app_list">Available Accounts</string>
+    <string name="app_upload_list">Files to Upload</string>
     <string name="app_detail">Account Detail</string>
     <string name="app_name">Omni Channel</string>
     <string name="app_photo">Save Photo</string>

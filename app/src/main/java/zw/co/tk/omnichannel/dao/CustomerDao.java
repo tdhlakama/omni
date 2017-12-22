@@ -32,4 +32,11 @@ public interface CustomerDao {
     @Query("SELECT * FROM customer WHERE uid=:uid")
     Customer getCustomer(int uid);
 
+    @Query("SELECT count(*) FROM customer")
+    Long countAll();
+
+    @Query("SELECT count(*) FROM customer")
+    Long countCustomersToSync();
+
+
 }

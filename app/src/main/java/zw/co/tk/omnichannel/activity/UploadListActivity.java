@@ -31,7 +31,7 @@ public class UploadListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upload_list_activity);
+        setContentView(R.layout.account_list_activity);
 
         OmniApplication.appComponent.inject(UploadListActivity.this);
 

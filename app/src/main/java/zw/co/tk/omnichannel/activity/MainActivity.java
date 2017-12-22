@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
+import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.dao.UserDao;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     UserDao userDao;
+
+    @Inject
+    CustomerDao customerDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +59,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        listAccountBtn.setText("Available Accounts (" + customerDao.countAll() + ")");
 
         syncBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UploadListActivity.class);
+                Intent intent = new Intent(MainActivity.this, AccountListActivity.class);
                 startActivity(intent);
             }
         });
+
+        syncBtn.setText("Files to Upload (" + customerDao.countCustomersToSync() + ")");
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
