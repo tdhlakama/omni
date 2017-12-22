@@ -1,7 +1,10 @@
 package zw.co.tk.omnichannel.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -37,5 +40,16 @@ public class UploadListActivity extends AppCompatActivity {
         CustomerAdapter adapter = new CustomerAdapter(this, customers);
         customerListView.setAdapter(adapter);
 
+        customerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Customer customer = (Customer) customerListView.getItemAtPosition(position);
+                Intent intent = new Intent(UploadListActivity.this, AccountDetailActivity.class);
+                intent.putExtra("customerId", customer.getUid());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
