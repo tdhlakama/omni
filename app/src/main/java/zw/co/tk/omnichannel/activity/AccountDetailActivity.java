@@ -32,10 +32,10 @@ import zw.co.tk.omnichannel.adpater.CustomerDocumentAdapter;
 import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.dao.CustomerDocumentDao;
 import zw.co.tk.omnichannel.dao.UserDao;
-import zw.co.tk.omnichannel.model.Customer;
-import zw.co.tk.omnichannel.model.CustomerDocument;
-import zw.co.tk.omnichannel.model.ServerResponse;
-import zw.co.tk.omnichannel.model.User;
+import zw.co.tk.omnichannel.entity.Customer;
+import zw.co.tk.omnichannel.entity.CustomerDocument;
+import zw.co.tk.omnichannel.entity.ServerResponse;
+import zw.co.tk.omnichannel.entity.User;
 import zw.co.tk.omnichannel.network.CustomerService;
 import zw.co.tk.omnichannel.util.OmniUtil;
 

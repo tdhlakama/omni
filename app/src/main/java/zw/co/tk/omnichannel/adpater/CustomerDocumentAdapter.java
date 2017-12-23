@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,11 +15,9 @@ import android.widget.Toast;
 import java.util.List;
 
 import zw.co.tk.omnichannel.R;
-import zw.co.tk.omnichannel.activity.AccountDetailActivity;
 import zw.co.tk.omnichannel.activity.PhotoActivity;
 import zw.co.tk.omnichannel.activity.SignatureActivity;
-import zw.co.tk.omnichannel.model.Customer;
-import zw.co.tk.omnichannel.model.CustomerDocument;
+import zw.co.tk.omnichannel.entity.CustomerDocument;
 import zw.co.tk.omnichannel.util.OmniUtil;
 
 /**

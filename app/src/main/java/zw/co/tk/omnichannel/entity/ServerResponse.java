@@ -1,4 +1,4 @@
-package zw.co.tk.omnichannel.model;
+package zw.co.tk.omnichannel.entity;
 
 public class ServerResponse {
 

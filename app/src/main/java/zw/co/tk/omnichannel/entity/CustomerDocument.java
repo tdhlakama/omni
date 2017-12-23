@@ -1,9 +1,8 @@
-package zw.co.tk.omnichannel.model;
+package zw.co.tk.omnichannel.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.graphics.Bitmap;
 
 /**
  * Created by tdhla on 15-Dec-17.

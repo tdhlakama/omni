@@ -32,9 +32,6 @@
             android:name=".activity.AccountActivity"
             android:label="@string/app_create" />
         <activity
-            android:name=".activity.UploadListActivity"
-            android:label="@string/app_upload_list"/>
-        <activity
             android:name=".activity.SignatureActivity"
             android:label="@string/app_signature"/>
         <activity

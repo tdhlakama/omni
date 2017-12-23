@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
 import zw.co.tk.omnichannel.dao.CustomerDao;
-import zw.co.tk.omnichannel.model.Customer;
+import zw.co.tk.omnichannel.entity.Customer;
 
 /**
  * Created by tdhla on 15-Dec-17.

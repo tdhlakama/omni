@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         listAccountBtn = findViewById(R.id.btn_list_accounts);
         logoutBtn = findViewById(R.id.btn_logout);
 
-
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AccountListActivity.class);
+                intent.putExtra("upload", true);
                 startActivity(intent);
             }
         });

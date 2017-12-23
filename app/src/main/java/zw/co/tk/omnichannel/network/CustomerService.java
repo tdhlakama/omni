@@ -11,11 +11,10 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
-import zw.co.tk.omnichannel.model.Customer;
-import zw.co.tk.omnichannel.model.ServerResponse;
-import zw.co.tk.omnichannel.model.User;
+import zw.co.tk.omnichannel.entity.Customer;
+import zw.co.tk.omnichannel.entity.ServerResponse;
+import zw.co.tk.omnichannel.entity.User;
 
 /**
  * Created by tdhla on 15-Dec-17.

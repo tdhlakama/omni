@@ -16,6 +16,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -43,6 +46,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
     implementation 'com.mindorks:paracamera:0.2.2'
+
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:1.0.0"
+    implementation "android.arch.lifecycle:common-java8:1.0.0"
 
 
 }

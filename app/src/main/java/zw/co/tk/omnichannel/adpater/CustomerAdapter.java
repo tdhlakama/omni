@@ -1,36 +1,59 @@
 package zw.co.tk.omnichannel.adpater;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import zw.co.tk.omnichannel.R;
-import zw.co.tk.omnichannel.model.Customer;
+import zw.co.tk.omnichannel.entity.Customer;
 
 /**
- * Created by tdhla on 15-Dec-17.
+ * Created by tdhla on 23-Dec-17.
  */
-public class CustomerAdapter extends ArrayAdapter<Customer> {
-    public CustomerAdapter(Context context, List<Customer> customers) {
-        super(context, 0, customers);
+
+public class CustomerAdapter extends RecyclerView.Adapter<CustomerHolder> {
+
+    private List<Customer> customerList;
+
+    private View.OnLongClickListener longClickListener;
+
+    public CustomerAdapter(List<Customer> customerList, View.OnLongClickListener longClickListener) {
+        this.customerList = customerList;
+        this.longClickListener = longClickListener;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Customer customer = getItem(position);
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.customer_activity, parent, false);
-        }
-        TextView txt_first_name =  convertView.findViewById(R.id.et_first_name);
-        TextView txt_surname =convertView.findViewById(R.id.et_surname);
-        txt_first_name.setText(customer.getFirstName());
-        txt_surname.setText(customer.getSurname());
-        return convertView;
+
+    public CustomerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        return new CustomerHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.customer_activity, parent, false));
     }
+
+
+    @Override
+    public void onBindViewHolder(final CustomerHolder holder, int position) {
+
+        Customer customer = customerList.get(position);
+        holder.txt_first_name.setText(customer.getFirstName());
+        holder.txt_surname.setText(customer.getSurname());
+        holder.itemView.setOnLongClickListener(longClickListener);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return customerList.size();
+    }
+
+    public void addItems(List<Customer> customerList) {
+        this.customerList = customerList;
+        notifyDataSetChanged();
+    }
+
+
+
 }

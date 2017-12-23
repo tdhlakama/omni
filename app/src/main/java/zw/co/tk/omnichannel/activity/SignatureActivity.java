@@ -26,8 +26,8 @@ import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
 import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.dao.CustomerDocumentDao;
-import zw.co.tk.omnichannel.model.Customer;
-import zw.co.tk.omnichannel.model.CustomerDocument;
+import zw.co.tk.omnichannel.entity.Customer;
+import zw.co.tk.omnichannel.entity.CustomerDocument;
 import zw.co.tk.omnichannel.util.OmniUtil;
 
 /**

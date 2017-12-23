@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
 import zw.co.tk.omnichannel.dao.UserDao;
-import zw.co.tk.omnichannel.model.User;
+import zw.co.tk.omnichannel.entity.User;
 import zw.co.tk.omnichannel.network.CustomerService;
 import zw.co.tk.omnichannel.util.OmniUtil;
 

@@ -50,7 +50,7 @@ public class NetModule {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .cache(cache)
-                .addInterceptor(logging)
+                //.addInterceptor(logging)
                 .build();
     }
 

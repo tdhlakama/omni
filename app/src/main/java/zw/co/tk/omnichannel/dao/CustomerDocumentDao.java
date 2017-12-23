@@ -8,8 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import zw.co.tk.omnichannel.model.Customer;
-import zw.co.tk.omnichannel.model.CustomerDocument;
+import zw.co.tk.omnichannel.entity.CustomerDocument;
 
 /**
  * Created by tdhla on 15-Dec-17.
