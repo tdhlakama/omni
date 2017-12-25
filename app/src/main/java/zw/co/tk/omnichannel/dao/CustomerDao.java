@@ -18,9 +18,6 @@ import zw.co.tk.omnichannel.entity.Customer;
 public interface CustomerDao {
 
     @Query("SELECT * FROM customer")
-    List<Customer> getAll();
-
-    @Query("SELECT * FROM customer")
     LiveData<List<Customer>> getAllCustomers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,20 +26,17 @@ public interface CustomerDao {
     @Delete
     void delete(Customer customer);
 
-    @Query("SELECT * FROM customer WHERE account_number is null or account_number=''")
-    List<Customer> getAllCustomerToUpload();
-
-    @Query("SELECT * FROM customer WHERE account_number is null or account_number=''")
+    @Query("SELECT * FROM customer WHERE account_number is null")
     LiveData<List<Customer>> getAllCustomersToUpload();
 
     @Query("SELECT * FROM customer WHERE uid=:uid")
     Customer getCustomer(int uid);
 
     @Query("SELECT count(*) FROM customer")
-    Long countAll();
+    LiveData<Long> countAll();
 
-    @Query("SELECT count(*) FROM customer")
-    Long countCustomersToSync();
+    @Query("SELECT count(*) FROM customer WHERE account_number is null")
+    LiveData<Long> countCustomersToSync();
 
 
 }

@@ -22,11 +22,16 @@ public class CustomerViewModel extends ViewModel {
 
     private final LiveData<List<Customer>> customerList;
     private final LiveData<List<Customer>> customerToUploadList;
+    private final LiveData<Long> countAll;
+    private final LiveData<Long> countCustomersToSync;
 
     public CustomerViewModel() {
         OmniApplication.appComponent.inject(CustomerViewModel.this);
         customerList = customerDao.getAllCustomers();
         customerToUploadList = customerDao.getAllCustomersToUpload();
+
+        countAll = customerDao.countAll();
+        countCustomersToSync = customerDao.countCustomersToSync();
     }
 
     public LiveData<List<Customer>> getCustomerList() {
@@ -35,5 +40,13 @@ public class CustomerViewModel extends ViewModel {
 
     public LiveData<List<Customer>> getCustomerToUploadList() {
         return customerToUploadList;
+    }
+
+    public LiveData<Long> getCountAll() {
+        return countAll;
+    }
+
+    public LiveData<Long> getCountCustomersToSync() {
+        return countCustomersToSync;
     }
 }

@@ -1,7 +1,10 @@
 package zw.co.tk.omnichannel.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -9,12 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import zw.co.tk.omnichannel.OmniApplication;
 import zw.co.tk.omnichannel.R;
 import zw.co.tk.omnichannel.dao.CustomerDao;
 import zw.co.tk.omnichannel.dao.UserDao;
+import zw.co.tk.omnichannel.entity.Customer;
+import zw.co.tk.omnichannel.model.CustomerViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button syncBtn;
     Button listAccountBtn;
     Button logoutBtn;
+    private CustomerViewModel customerViewModel;
 
     @Inject
     UserDao userDao;
@@ -43,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         listAccountBtn = findViewById(R.id.btn_list_accounts);
         logoutBtn = findViewById(R.id.btn_logout);
 
+        customerViewModel = ViewModelProviders.of(this).get(CustomerViewModel.class);
+
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +68,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        listAccountBtn.setText("Available Accounts (" + customerDao.countAll() + ")");
+
+        customerViewModel.getCountAll().observe(MainActivity.this, new Observer<Long>() {
+            @Override
+            public void onChanged(@Nullable Long count) {
+                listAccountBtn.setText("Available Accounts (" + count+ ")");
+            }
+        });
 
         syncBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +85,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        syncBtn.setText("Files to Upload (" + customerDao.countCustomersToSync() + ")");
+        customerViewModel.getCountCustomersToSync().observe(MainActivity.this, new Observer<Long>() {
+            @Override
+            public void onChanged(@Nullable Long count) {
+                syncBtn.setText("Files to Upload (" + count + ")");
+            }
+        });
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,7 +26,7 @@ import zw.co.tk.omnichannel.entity.Customer;
  * Created by tdhla on 15-Dec-17.
  */
 
-public class AccountListActivity extends AppCompatActivity implements View.OnLongClickListener {
+public class AccountListActivity extends AppCompatActivity {
 
     @Inject
     CustomerDao customerDao;
@@ -46,9 +46,10 @@ public class AccountListActivity extends AppCompatActivity implements View.OnLon
         upload = getIntent().getBooleanExtra("upload", false);
 
         recyclerView = findViewById(R.id.list);
-        customerAdapter = new CustomerAdapter(new ArrayList<Customer>(), this);
+        customerAdapter = new CustomerAdapter(new ArrayList<Customer>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        recyclerView.setAdapter(customerAdapter);
         customerViewModel = ViewModelProviders.of(this).get(CustomerViewModel.class);
 
         if (upload) {
@@ -68,17 +69,4 @@ public class AccountListActivity extends AppCompatActivity implements View.OnLon
         }
     }
 
-    @Override
-
-    public boolean onLongClick(View v) {
-
-        Customer customer = (Customer) v.getTag();
-        Intent intent = new Intent(AccountListActivity.this, AccountDetailActivity.class);
-        intent.putExtra("customerId", customer.getUid());
-        startActivity(intent);
-        finish();
-
-        return true;
-
-    }
 }
