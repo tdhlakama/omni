@@ -38,8 +38,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerHolder> {
     public void onBindViewHolder(final CustomerHolder holder, int position) {
 
         final Customer customer = customerList.get(position);
-        holder.txt_first_name.setText(customer.getFirstName());
-        holder.txt_surname.setText(customer.getSurname());
+        holder.txt_first_name.setText("First Name - " +customer.getFirstName());
+        holder.txt_surname.setText("Surname - " + customer.getSurname());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
