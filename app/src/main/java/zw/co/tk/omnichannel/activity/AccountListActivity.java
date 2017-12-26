@@ -67,6 +67,8 @@ public class AccountListActivity extends AppCompatActivity {
                 }
             });
         }
+        Log.v("TAG","---------------------------------------------------" + customerAdapter.getItemCount());
+        recyclerView.setAdapter(customerAdapter);
     }
 
 }

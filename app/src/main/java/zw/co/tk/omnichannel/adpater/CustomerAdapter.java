@@ -3,6 +3,7 @@ package zw.co.tk.omnichannel.adpater;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,6 @@ import zw.co.tk.omnichannel.entity.Customer;
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerHolder> {
 
     private List<Customer> customerList;
-
-    private View.OnLongClickListener longClickListener;
 
     public CustomerAdapter(List<Customer> customerList) {
         this.customerList = customerList;
