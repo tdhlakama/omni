@@ -1,10 +1,13 @@
 package zw.co.tk.omnichannel.activity;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +39,7 @@ import zw.co.tk.omnichannel.entity.Customer;
 import zw.co.tk.omnichannel.entity.CustomerDocument;
 import zw.co.tk.omnichannel.entity.ServerResponse;
 import zw.co.tk.omnichannel.entity.User;
+import zw.co.tk.omnichannel.model.UserViewModel;
 import zw.co.tk.omnichannel.network.CustomerService;
 import zw.co.tk.omnichannel.util.OmniUtil;
 
@@ -56,13 +60,13 @@ public class AccountDetailActivity extends AppCompatActivity implements View.OnC
     @Inject
     CustomerDao customerDao;
     @Inject
-    UserDao userDao;
-    @Inject
     CustomerDocumentDao customerDocumentDao;
     @Inject
     Retrofit retrofit;
 
-    User user;
+    UserViewModel userViewModel;
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,14 @@ public class AccountDetailActivity extends AppCompatActivity implements View.OnC
         int customerId = getIntent().getIntExtra("customerId", 0);
         customer = customerDao.getCustomer(customerId);
 
-        user = userDao.getUser();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
+        userViewModel.getUser().observe(AccountDetailActivity.this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User found) {
+                user = found;
+            }
+        });
 
         txt_firstName = findViewById(R.id.txt_first_name);
         txt_surname = findViewById(R.id.txt_surname);

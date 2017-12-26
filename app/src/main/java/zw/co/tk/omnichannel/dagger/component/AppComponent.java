@@ -10,10 +10,12 @@ import zw.co.tk.omnichannel.activity.LoginActivity;
 import zw.co.tk.omnichannel.activity.MainActivity;
 import zw.co.tk.omnichannel.activity.PhotoActivity;
 import zw.co.tk.omnichannel.activity.SignatureActivity;
+import zw.co.tk.omnichannel.dao.UserDao;
 import zw.co.tk.omnichannel.model.CustomerViewModel;
 import zw.co.tk.omnichannel.dagger.module.AppModule;
 import zw.co.tk.omnichannel.dagger.module.NetModule;
 import zw.co.tk.omnichannel.dagger.module.RoomModule;
+import zw.co.tk.omnichannel.model.UserViewModel;
 
 /**
  * Created by tdhla on 15-Dec-17.
@@ -37,4 +39,8 @@ public interface AppComponent {
     void inject(PhotoActivity photoActivity);
 
     void inject(CustomerViewModel customerViewModel);
+
+    void inject(UserDao userDao);
+
+    void inject(UserViewModel userViewModel);
 }

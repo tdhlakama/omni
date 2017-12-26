@@ -2,6 +2,7 @@ package zw.co.tk.omnichannel.model;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
 import java.util.List;
 
@@ -29,7 +30,6 @@ public class CustomerViewModel extends ViewModel {
         OmniApplication.appComponent.inject(CustomerViewModel.this);
         customerList = customerDao.getAllCustomers();
         customerToUploadList = customerDao.getAllCustomersToUpload();
-
         countAll = customerDao.countAll();
         countCustomersToSync = customerDao.countCustomersToSync();
     }

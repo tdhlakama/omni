@@ -1,5 +1,6 @@
 package zw.co.tk.omnichannel.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -25,6 +26,6 @@ public interface UserDao {
     void deleteAll();
 
     @Query("SELECT * FROM user limit 1")
-    User getUser();
+    LiveData<User> getUser();
 
 }

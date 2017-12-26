@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -49,7 +50,6 @@ public class AccountListActivity extends AppCompatActivity {
         customerAdapter = new CustomerAdapter(new ArrayList<Customer>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setAdapter(customerAdapter);
         customerViewModel = ViewModelProviders.of(this).get(CustomerViewModel.class);
 
         if (upload) {
